@@ -10,24 +10,15 @@ $(document).ready(function(){
 	} else {
 	  // HTML5 localStorage Support
 
+
 	}
 	$(".menu").hide();
-
-	// need to find better way to do this
-	// $(".rest1").click(function(){
-	// 	$(".taco").toggle(1000);
-	// });
-
-	// $(".rest2").click(function(){
-	// 	$(".burgers").toggle(1000);
-	// });
-	
 	showList();
 
 });
+var prev = null,  curr = null;
 function showList(){
-
-	$(document).on('click', '.rest', function(){
+	$('.rest').on('click', function(e){
 		$(this).parent().find('.menu').toggle();
 	});
 }
