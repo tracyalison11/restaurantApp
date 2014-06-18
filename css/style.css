@@ -8,3 +8,15 @@
 h1{
 	text-align: center;
 }
+
+.subTotal {
+	color: blue;
+	text-align: right;
+}
+.btn{
+	padding: 5px;
+	margin-top:0;
+}
+.orderTotal{
+	margin-top:15px;
+}
