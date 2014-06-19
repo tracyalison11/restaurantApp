@@ -15,6 +15,12 @@
 			<h1>Group Restaurant Application</h1>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-lg-12 col-xs-12 col-center">
+		<center>Customer Name: <input class="customerName" type="text" placeholder="John" /></center>
+		<br />
+		</div>
+	</div>
 	<!-- BEGIN RESTAURANT LIST -->
 		<div class="row">
 			<div class="col-lg-8 col-md-8 col-sm-12 col-center">
@@ -31,38 +37,38 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<tr class="menu-item-1">
 										<td>Grilled Squid Veracruz</td>
 										<td>$14</td>
 										<td><input class ="form" placeholder="0" data-price="14" type="number" name="quantity" value="0" min="0" max="99"></td>
 										<td class="price1 itemTotal"></td>
 
 									</tr>
-									<tr>
+									<tr class="menu-item-2">
 										<td>Beet and Citrus Salad</td>
 										<td>$8</td>
 										<td><input class ="form" placeholder="0" data-price="8" type="number" name="quantity" value="0" min="0" max="99"></td>
 										<td class="price2 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-3">
 										<td>Guajillo Braised Beef Short Rib Taco</td>
 										<td>$16</td>
 										<td><input class="form" placeholder="0" data-price="16" type="number" name="quantity" value="0" min="0" max="99"></td>
 										<td class="price3 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-4">
 										<td>Fried Pacific Cod Taco</td>
 										<td>$22</td>
 										<td><input class ="form" placeholder="0" data-price="22" type="number" name="quantity" value="0" min="0" max="99"></td>
 										<td class="price4 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-5">
 										<td>Traditional Carnitas Taco</td>
 										<td>$10</td>
 										<td><input class ="form" placeholder="0" data-price="10" type="number" name="quantity" value="0" min="0" max="99"></td>
 										<td class="price5 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-6">
 										<td>House-made Chorizo and Potatoes</td>
 										<td>$8</td>
 										<td><input class ="form" placeholder="0" data-price="8" type="number" name="quantity" value="0" min="0" max="99"></td>
@@ -78,7 +84,7 @@
 										<td></td>
 										<td></td>
 										<td></td>
-										<td><button class="btn btn-warning" onclick="submit();">Submit Order</button></td>
+										<td><button class="btn btn-warning submitOrder" data-info="Tacolicious">Submit Order</button></td>
 									</tr>
 								</tbody>
 							</table>
@@ -101,37 +107,37 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<tr class="menu-item-1">
 										<td>Super Burger</td>
 										<td>$12</td>
 										<td><input class ="form" placeholder="0" data-price="12" type="number" name="quantity" min="0" max="99"></td>
 										<td class="price1 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-2">
 										<td>Mini Burger</td>
 										<td>$8</td>
 										<td><input class ="form" placeholder="0" data-price="8" type="number" name="quantity" min="0" max="99"></td>
 										<td class="price2 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-3">
 										<td>Chicken Sandwich</td>
 										<td>$13</td>
 										<td><input class ="form" placeholder="0" data-price="13" type="number" name="quantity" min="0" max="99"></td>
 										<td class="price3 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-4">
 										<td>Veggie Burger</td>
 										<td>$10</td>
 										<td><input class ="form" placeholder="0" data-price="10" type="number" name="quantity" min="0" max="99"></td>
 										<td class="price4 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-5">
 										<td>French Fries</td>
 										<td>$5</td>
 										<td><input class ="form" placeholder="0" data-price="5" type="number" name="quantity" min="0" max="99"></td>
 										<td class="price5 itemTotal"></td>
 									</tr>
-									<tr>
+									<tr class="menu-item-6">
 										<td>Garlic Fries</td>
 										<td>$6</td>
 										<td><input class ="form" placeholder="0" data-price="6" type="number" name="quantity" min="0" max="99"></td>
@@ -142,6 +148,12 @@
 										<td></td>
 										<td>Total Amount:</td>
 										<td class="orderTotal"></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><button class="btn btn-warning submitOrder" data-info="Super Duper Burgers">Submit Order</button></td>
 									</tr>
 
 								</tbody>

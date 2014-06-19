@@ -4,25 +4,19 @@ $(document).ready(function(){
 	  return typeof(Storage)!== 'undefined';
 	}
 
-	// Run the support check
-	if (!supportsLocalStorage()) {
-	  // No HTML5 localStorage Support
-	} else {
-	  // HTML5 localStorage Support
-
-
-	}
 	$(".menu").hide();
 	showList();
 
 	calc();
-
+	submitToLocalStorage();
 });
 var itemTotal = 0;
+var orderTotal = 0;
 function showList(){
 	$('.rest').on('click', function(){
 		$(this).parent().find('.menu').toggle();
 		itemTotal = 0;
+		orderTotal = 0;
 	});
 }
 
@@ -32,7 +26,7 @@ function calc(){
 	var quantity = click.val();
 	var price = click.data("price");
 	itemTotal = price * quantity;
-
+	//insert subtotal in last column
 	click.parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
 
 	var orderTotal = 0;
@@ -49,7 +43,47 @@ function calc(){
 		click.parent().parent().parent().find('.orderTotal').html(orderTotal);
 
 	});
+}
+ function clearLocalStorage() {
+   localStorage.clear();
+ }
+function submitToLocalStorage(){
+	$('.submitOrder').on('click', function(){
+		
+		var trElem = $(this).closest('tbody').find('tr[class^=menu-item]');
+		var menuItems = [];
+		for(var k=0; k<trElem.length; k++){
+			var tmp = trElem[k];
+			menuItems.push(tmp);
 
-
-
+		}
+		// console.log(menuItems);
+		var orders = [];
+		for(var j=0; j<menuItems.length; j++){
+			var menuItemNum = menuItems[j];
+			if(menuItemNum.cells[2].childNodes[0].value != "" && menuItemNum.cells[2].childNodes[0].value != "0"){
+				orders.push([menuItemNum.cells[0].innerHTML, 
+							 menuItemNum.cells[1].innerHTML,
+						 	 menuItemNum.cells[2].childNodes[0].value,
+						 	 menuItemNum.cells[3].innerText]);
+				console.log(orders);
+			}
+		}
+		var customerName = $('.customerName').val();
+		var newDate = new Date;
+		orders.unshift(customerName, newDate)
+		console.log(orders);
+	  	// HTML5 localStorage Support
+		try{
+			localStorage.setItem('order', orders)
+			console.log(localStorage.order);
+		}
+		catch(e){
+			if (e == QUOTA_EXCEEDED_ERR) {
+	          // alert("Local Storage Quota exceeded");
+	          // you can clear local storage here:
+	          
+	       }
+		}
+	});
 }
