@@ -22,12 +22,11 @@ function showList(){
 
 function calc(){
 	$('input').on('click',function(){
-	var click = $(this);
-	var quantity = click.val();
-	var price = click.data("price");
+	var quantity = $(this).val();
+	var price = $(this).data("price");
 	itemTotal = price * quantity;
 	//insert subtotal in last column
-	click.parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
+	$(this).parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
 
 	var orderTotal = 0;
 	
@@ -40,7 +39,7 @@ function calc(){
 		}
 		orderTotal += lineItemCost;	
 	}
-		click.parent().parent().parent().find('.orderTotal').html(orderTotal);
+		$(this).parent().parent().parent().find('.orderTotal').html(orderTotal);
 
 	});
 }
@@ -58,6 +57,7 @@ function submitToLocalStorage(){
 
 		}
 		// console.log(menuItems);
+
 		var orders = [];
 		for(var j=0; j<menuItems.length; j++){
 			var menuItemNum = menuItems[j];
@@ -66,16 +66,18 @@ function submitToLocalStorage(){
 							 menuItemNum.cells[1].innerHTML,
 						 	 menuItemNum.cells[2].childNodes[0].value,
 						 	 menuItemNum.cells[3].innerText]);
-				console.log(orders);
 			}
 		}
 		var customerName = $('.customerName').val();
+		var orderTotal = $(this).parent().parent().parent().find('.orderTotal').html();
 		var newDate = new Date;
-		orders.unshift(customerName, newDate)
+		orders.unshift(customerName, newDate, orderTotal);
 		console.log(orders);
 	  	// HTML5 localStorage Support
 		try{
-			localStorage.setItem('order', orders)
+			localStorage.setItem('order', orders);
+			var newOrder = localStorage.getItem(orders);
+			$('.orderContainer').find('.listOrders').append('<li>' + localStorage.order + '</li>');
 			console.log(localStorage.order);
 		}
 		catch(e){
