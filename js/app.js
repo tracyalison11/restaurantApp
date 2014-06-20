@@ -73,7 +73,7 @@ function submitToLocalStorage(){
 		
 		//Formatting DATE and TIME
 		var newDate = new Date();
-		var am_pm = " ";
+		var am_pm = " "; 
 		var currDate = newDate.getDate();
 		console.log("currDate = " + currDate);
 		var currMonth = newDate.getMonth() + 1;
