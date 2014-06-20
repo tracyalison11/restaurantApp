@@ -75,10 +75,13 @@ function submitToLocalStorage(){
 		var newDate = new Date();
 		var am_pm = " ";
 		var currDate = newDate.getDate();
-		var currMonth = newDate.getMonth();
+		console.log("currDate = " + currDate);
+		var currMonth = newDate.getMonth() + 1;
+		console.log("currMonth = " + currMonth)
 		var currYear = newDate.getFullYear();
+		console.log("currYear = " + currYear)
 		orders.unshift(customerName, newDate, orderTotal);
-		console.log(orders);
+		// console.log(orders);
 
 		var currHour = newDate.getHours();
 		if (currHour < 12) {
@@ -91,7 +94,7 @@ function submitToLocalStorage(){
 			currHour = currHour - 12;
 		}
 
-		var currMin = getDate().getMinutes();
+		var currMin = newDate.getMinutes();
 		currMin = currMin + " ";
 
 		if (currMin.length == 1) {
@@ -101,8 +104,8 @@ function submitToLocalStorage(){
 		try{
 			localStorage.setItem('order', orders);
 			var newOrder = localStorage.getItem(orders);
-			$('.orderContainer').find('.listOrders').append('<li>' + localStorage.order + '</li>');
-			console.log(localStorage.order);
+			$('.orderContainer').find('.listOrders').append('<li>' + "Order Date " +currMonth + " " + currDate + " " + currYear + " " + currHour + ":" + currMin + am_pm + localStorage.order+ '</li>');
+			// console.log(localStorage.order);
 		}
 		catch(e){
 			if (e == QUOTA_EXCEEDED_ERR) {
