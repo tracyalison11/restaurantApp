@@ -7,7 +7,7 @@ $(document).ready(function(){
 	(function($) {
     
 	  var allPanels = $('.menu').hide();
-	    
+
 	  $('.rest').click(function() {
 	    allPanels.hide();
 	    $(this).parent().find('.menu').toggle();
@@ -46,16 +46,6 @@ function calcPrices(){
 	price = $(this).data("price");
 	console.log('price= ' + price);
 	itemTotal = price * quantity;
-<<<<<<< HEAD
-	//insert subtotal in last column
-	var orderTotal=0;
-	$(this).parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
-	
-	
-
-
-	
-=======
 
 	console.log("calcPrices orderTotal= " + orderTotal);
 	console.log("calcPrices itemTotal= " + itemTotal);
@@ -64,7 +54,6 @@ function calcPrices(){
 	$(this).parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
 	// orderTotal = 0;
 	// Hardcoded value of 7 for number of entrees
->>>>>>> c5ae431ca8f0e527350218b85cef02506856f100
 	for (var i=1; i < 7; i++) {
 		//set var to value inside of last column of row
 		lineItemCost = parseInt($(this).parent().parent().parent().find('.price' + i).find('.subTotal').html());
@@ -73,18 +62,11 @@ function calcPrices(){
 		if(isNaN(lineItemCost) == true) {
 			lineItemCost = 0;
 		}
-		$(this).parent().parent().parent().find('.orderTotal').html(orderTotal);
-
 		orderTotal += lineItemCost;	
-
 	}
-<<<<<<< HEAD
-	$(this).reset();
-=======
 	console.log("calcPrices orderTotal= " + orderTotal);
 	console.log("calcPrices itemTotal= " + itemTotal);
 	$(this).parent().parent().parent().find('.orderTotal').html(orderTotal);
->>>>>>> c5ae431ca8f0e527350218b85cef02506856f100
 
 	});
 }
@@ -155,7 +137,7 @@ function submitToLocalStorage(){
 			if (e == QUOTA_EXCEEDED_ERR) {
 	          alert("Local Storage Quota exceeded");
 	          // you can clear local storage here:
-	          
+
 	       }
 		}
 	});
