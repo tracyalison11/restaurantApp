@@ -2,13 +2,68 @@
     float: none;
     margin: 0 auto;
 }
-.rest-title{
-	color: green;
+.rest{
+	color: white;
+	font-family: 'Open Sans Condensed', sans-serif; 
+	font-weight: 700;
+
 }
-h1, h2{
+	
+body{ 
+	padding-top: 70px; }
+
+h1 {
 	text-align: center;
+	font-family: 'Open Sans Condensed', sans-serif; 
+	font-weight: 700;
+	margin-bottom: 20px;
 }
 
+h2{
+	text-align: center;
+	font-family: 'Open Sans Condensed', sans-serif; 
+	font-weight: 700;
+}
+.navbar-fixed-top{
+	background-color: #ad1d28;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    height: 70px;
+
+}
+
+.name {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: 400;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 40px;
+
+
+}
+
+.row{
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: 400;
+
+	
+}
+.container{
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: 700;
+	font-weight: bold;
+}
+
+.list-group-item{
+	background-color: #ad1d28;
+}
+
+}
 .subTotal {
 	color: blue;
 	text-align: right;
@@ -16,6 +71,8 @@ h1, h2{
 .btn{
 	padding: 5px;
 	margin-top:0;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: 700;
 }
 .orderTotal{
 	margin-top:15px;
