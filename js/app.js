@@ -27,6 +27,7 @@ $(document).ready(function(){
 var itemTotal = 0;
 var orderTotal = 0;
 var lineItemCost = 0;
+
 //reset total related values whenever users click on different restaurant
 function resetItemRelatedVars(){
 	itemTotal = 0;
@@ -47,12 +48,9 @@ function calcPrices(){
 	console.log('price= ' + price);
 	itemTotal = price * quantity;
 
-	console.log("calcPrices orderTotal= " + orderTotal);
-	console.log("calcPrices itemTotal= " + itemTotal);
-
 	//insert subtotal in item total column
 	$(this).parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
-	// orderTotal = 0;
+
 	// Hardcoded value of 7 for number of entrees
 	for (var i=1; i < 7; i++) {
 		//set var to value inside of last column of row
@@ -64,18 +62,21 @@ function calcPrices(){
 		}
 		orderTotal += lineItemCost;	
 	}
-	console.log("calcPrices orderTotal= " + orderTotal);
-	console.log("calcPrices itemTotal= " + itemTotal);
-	$(this).parent().parent().parent().find('.orderTotal').html(orderTotal);
+	//insert orderTotal last row last column
+	$(this).parent().parent().parent().find('.orderTotal').html("$" + orderTotal);
 
 	});
 }
  function clearLocalStorage() {
    localStorage.clear();
  }
+
 function submitToLocalStorage(){
 	$('.submitOrder').on('click', function(){
+
 		clearLocalStorage();
+
+		//get all menu-item-# trees and iterate to parse menu table
 		var trElem = $(this).closest('tbody').find('tr[class^=menu-item]');
 		var menuItems = [];
 		for(var k=0; k<trElem.length; k++){
@@ -83,24 +84,14 @@ function submitToLocalStorage(){
 			menuItems.push(tmp);
 
 		}
-
+		//initialize firebase object
+		var myDataRef = new Firebase('https://torid-fire-9098.firebaseio.com/');
 		function setItems(key, data){
+				//set items in local storage
 				localStorage.setItem(key,data);
+				//set items in Firebase server
+				myDataRef.push({key: data});
 		}
-
-		var orders = {};
-		for(var j=0; j<menuItems.length; j++){
-			var menuItemNum = menuItems[j];
-			if(menuItemNum.cells[2].childNodes[0].value != "" && menuItemNum.cells[2].childNodes[0].value != "0"){
-				orders[j] = menuItemNum.cells[0].innerHTML + ": " + menuItemNum.cells[2].childNodes[0].value;
-				setItems('order'+j,orders[j]);
-			}
-		}
-
-		var customerName = "Customer Name: " + $('.customerName').val();
-		setItems('custName', customerName);
-		var orderTotal = "Total Amount: $" + $(this).parent().parent().parent().find('.orderTotal').html() + ".";
-		setItems('orderTotal', orderTotal);
 
 		//Formatting DATE and TIME
 		var newDate = new Date();
@@ -123,21 +114,63 @@ function submitToLocalStorage(){
 		if (currMin.length == 1) {
 			currMin = "0" + currMin;
 		}
+
+		//set Date
 		var orderTimestamp = "Order Date: " +currMonth + "/" + currDate + "/" + currYear + " " + currHour + ":" + currMin + am_pm;
 		setItems('date', orderTimestamp);
-	  	// HTML5 localStorage Support
-		try{	
-			for (var key in localStorage){
-				$('.orderContainer').find('.listOrders').append('<li>' + localStorage[key] + ' </li>');
+
+		//set Customer Name
+		var customerName = "Customer Name: " + $('.customerName').val();
+		setItems('custName', customerName);
+
+		var orders = {};
+		for(var j=0; j<menuItems.length; j++){
+			var menuItemNum = menuItems[j];
+			if(menuItemNum.cells[2].childNodes[0].value != "" && menuItemNum.cells[2].childNodes[0].value != "0"){
+				orders[j] = menuItemNum.cells[0].innerHTML + ": " + menuItemNum.cells[2].childNodes[0].value;
+				setItems('order'+j,orders[j]);
 			}
-			$('.orderContainer').find('.listOrders').append('<hr />');
-			// $('.orderContainer').find('.listOrders').append('<li>' + localStorage.date + localStorage.order + '</li>');
+		}
+
+		//set orderTotal
+		var orderTotal = "Total Amount: " + $(this).parent().parent().parent().find('.orderTotal').html();
+		setItems('orderTotal', orderTotal);
+
+		//empty the order history div
+		$('.orderContainer').find('.listOrders').empty();
+		
+		//get items from Firebase to pass into displayListItems()
+		myDataRef.on('child_added', function(snapshot){
+			var item = snapshot.val();
+			displayListItems(item.key);
+			console.log(item);
+		});
+
+		//if using Firebase data, append data to page
+		function displayListItems(data){
+			//Print out order in a list
+			$('.orderContainer').find('.listOrders').append('<li>' + data + ' </li>');
+			//Print out order in one line
+			// $('.orderContainer').find('.listOrders').append('<span>' + data + ' </span>');
+			}
+			//add a horizontal line to end of each order
+			$("li:contains('Total')").append('<hr />');
+
+			//scroll down to bottom of page to view order
+			$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+			    
+
+	  	// if using HTML5 localStorage Support
+		try{	
+			// for (var key in localStorage){
+			// 	$('.orderContainer').find('.listOrders').append('<li>' + localStorage[key] + ' </li>');
+			// }
+			// $('.orderContainer').find('.listOrders').append('<hr />');
 		}
 		catch(e){
 			if (e == QUOTA_EXCEEDED_ERR) {
 	          alert("Local Storage Quota exceeded");
 	          // you can clear local storage here:
-
 	       }
 		}
 	});

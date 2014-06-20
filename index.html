@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
 <link rel="icon" 
       type="image/png" 
       href="img/feed.png">
-
+<script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
 	<title>Feed.me</title>
 </head>
 <body>
@@ -602,7 +603,7 @@
 		<div class="row">
 			<div class="col-lg-8 col-md-8 col-sm-12 col-center">
 				<h2>Order History</h2>
-				<ul class="listOrders">
+				<ul class="listOrders" id="orderUp">
 					
 				</ul>
 			</div>
@@ -613,6 +614,7 @@
 
 <script src="includes/jQuery-v2.1.1.js"></script>
 <script src="includes/bootstrap.min.js"></script>
+<script src="js/smoothScroll.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
