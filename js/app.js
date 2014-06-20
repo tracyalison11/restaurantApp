@@ -3,43 +3,70 @@ $(document).ready(function(){
 	function supportsLocalStorage() {
 	  return typeof(Storage)!== 'undefined';
 	}
+	//show and hide all panels
+	(function($) {
+    
+	  var allPanels = $('.menu').hide();
+	    
+	  $('.rest').click(function() {
+	    allPanels.hide();
+	    $(this).parent().find('.menu').toggle();
+	    $( "input[name*='quantity']" ).val(0);
+	    $(this).parent().find('.subTotal').html("")
+	    $(this).parent().find('.orderTotal').html("");
+	    resetItemRelatedVars();
+	    return false;
+	  });
 
-	$(".menu").hide();
-	showList();
-
-	calc();
+})(jQuery);
+	calcPrices();
 	submitToLocalStorage();
 });
+
+//GLOBAL VARS
 var itemTotal = 0;
 var orderTotal = 0;
-function showList(){
-	$('.rest').on('click', function(){
-		$(this).parent().find('.menu').toggle();
-		itemTotal = 0;
-		orderTotal = 0;
-	});
+var lineItemCost = 0;
+//reset total related values whenever users click on different restaurant
+function resetItemRelatedVars(){
+	itemTotal = 0;
+	orderTotal = 0;
+	lineItemCost = 0;
 }
 
-function calc(){
+//calculate line item values and subtotal
+function calcPrices(){
 	$('input').on('click',function(){
-	var quantity = $(this).val();
-	var price = $(this).data("price");
-	itemTotal = price * quantity;
-	//insert subtotal in last column
-	$(this).parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
 
-	var orderTotal = 0;
-	
+	resetItemRelatedVars();
+	var quantity = 0;
+	var price = 0;
+	quantity = $(this).val();
+	console.log('quantity= ' + quantity);
+	price = $(this).data("price");
+	console.log('price= ' + price);
+	itemTotal = price * quantity;
+
+	console.log("calcPrices orderTotal= " + orderTotal);
+	console.log("calcPrices itemTotal= " + itemTotal);
+
+	//insert subtotal in item total column
+	$(this).parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
+	// orderTotal = 0;
+	// Hardcoded value of 7 for number of entrees
 	for (var i=1; i < 7; i++) {
 		//set var to value inside of last column of row
-		var lineItemCost = parseInt($('.price' + i).find('.subTotal').html());
+		lineItemCost = parseInt($(this).parent().parent().parent().find('.price' + i).find('.subTotal').html());
+		console.log(lineItemCost);
 		//check to see if its not a valid number, if not set it to 0
 		if(isNaN(lineItemCost) == true) {
 			lineItemCost = 0;
 		}
 		orderTotal += lineItemCost;	
 	}
-		$(this).parent().parent().parent().find('.orderTotal').html(orderTotal);
+	console.log("calcPrices orderTotal= " + orderTotal);
+	console.log("calcPrices itemTotal= " + itemTotal);
+	$(this).parent().parent().parent().find('.orderTotal').html(orderTotal);
 
 	});
 }
