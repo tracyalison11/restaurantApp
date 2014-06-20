@@ -7,7 +7,7 @@ $(document).ready(function(){
 	(function($) {
     
 	  var allPanels = $('.menu').hide();
-	    
+
 	  $('.rest').click(function() {
 	    allPanels.hide();
 	    $(this).parent().find('.menu').toggle();
@@ -137,7 +137,7 @@ function submitToLocalStorage(){
 			if (e == QUOTA_EXCEEDED_ERR) {
 	          alert("Local Storage Quota exceeded");
 	          // you can clear local storage here:
-	          
+
 	       }
 		}
 	});
