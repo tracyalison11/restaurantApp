@@ -48,7 +48,7 @@ function calc(){
  }
 function submitToLocalStorage(){
 	$('.submitOrder').on('click', function(){
-		
+		clearLocalStorage();
 		var trElem = $(this).closest('tbody').find('tr[class^=menu-item]');
 		var menuItems = [];
 		for(var k=0; k<trElem.length; k++){
@@ -56,33 +56,31 @@ function submitToLocalStorage(){
 			menuItems.push(tmp);
 
 		}
-		// console.log(menuItems);
 
-		var orders = [];
+		function setItems(key, data){
+				localStorage.setItem(key,data);
+		}
+
+		var orders = {};
 		for(var j=0; j<menuItems.length; j++){
 			var menuItemNum = menuItems[j];
 			if(menuItemNum.cells[2].childNodes[0].value != "" && menuItemNum.cells[2].childNodes[0].value != "0"){
-				orders.push([menuItemNum.cells[0].innerHTML, 
-							 menuItemNum.cells[1].innerHTML,
-						 	 menuItemNum.cells[2].childNodes[0].value,
-						 	 menuItemNum.cells[3].innerText]);
+				orders[j] = menuItemNum.cells[0].innerHTML + ": " + menuItemNum.cells[2].childNodes[0].value;
+				setItems('order'+j,orders[j]);
 			}
 		}
-		var customerName = $('.customerName').val();
-		var orderTotal = $(this).parent().parent().parent().find('.orderTotal').html();
-		
+
+		var customerName = "Customer Name: " + $('.customerName').val();
+		setItems('custName', customerName);
+		var orderTotal = "Total Amount: $" + $(this).parent().parent().parent().find('.orderTotal').html() + ".";
+		setItems('orderTotal', orderTotal);
+
 		//Formatting DATE and TIME
 		var newDate = new Date();
 		var am_pm = " "; 
 		var currDate = newDate.getDate();
-		console.log("currDate = " + currDate);
 		var currMonth = newDate.getMonth() + 1;
-		console.log("currMonth = " + currMonth)
 		var currYear = newDate.getFullYear();
-		console.log("currYear = " + currYear)
-		orders.unshift(customerName, newDate, orderTotal);
-		// console.log(orders);
-
 		var currHour = newDate.getHours();
 		if (currHour < 12) {
 			am_pm = "AM";
@@ -93,23 +91,24 @@ function submitToLocalStorage(){
 		if (currHour == 0) {
 			currHour = currHour - 12;
 		}
-
 		var currMin = newDate.getMinutes();
 		currMin = currMin + " ";
-
 		if (currMin.length == 1) {
 			currMin = "0" + currMin;
 		}
+		var orderTimestamp = "Order Date: " +currMonth + "/" + currDate + "/" + currYear + " " + currHour + ":" + currMin + am_pm;
+		setItems('date', orderTimestamp);
 	  	// HTML5 localStorage Support
-		try{
-			localStorage.setItem('order', orders);
-			var newOrder = localStorage.getItem(orders);
-			$('.orderContainer').find('.listOrders').append('<li>' + "Order Date " +currMonth + " " + currDate + " " + currYear + " " + currHour + ":" + currMin + am_pm + localStorage.order+ '</li>');
-			// console.log(localStorage.order);
+		try{	
+			for (var key in localStorage){
+				$('.orderContainer').find('.listOrders').append('<li>' + localStorage[key] + ' </li>');
+			}
+			$('.orderContainer').find('.listOrders').append('<hr />');
+			// $('.orderContainer').find('.listOrders').append('<li>' + localStorage.date + localStorage.order + '</li>');
 		}
 		catch(e){
 			if (e == QUOTA_EXCEEDED_ERR) {
-	          // alert("Local Storage Quota exceeded");
+	          alert("Local Storage Quota exceeded");
 	          // you can clear local storage here:
 	          
 	       }
