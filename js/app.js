@@ -26,9 +26,12 @@ function calc(){
 	var price = $(this).data("price");
 	itemTotal = price * quantity;
 	//insert subtotal in last column
+	var orderTotal=0;
 	$(this).parent().parent().find('.itemTotal').html("<span class='subTotal'>" + itemTotal + "</span>");
+	
+	
 
-	var orderTotal = 0;
+
 	
 	for (var i=1; i < 7; i++) {
 		//set var to value inside of last column of row
@@ -37,9 +40,12 @@ function calc(){
 		if(isNaN(lineItemCost) == true) {
 			lineItemCost = 0;
 		}
-		orderTotal += lineItemCost;	
-	}
 		$(this).parent().parent().parent().find('.orderTotal').html(orderTotal);
+
+		orderTotal += lineItemCost;	
+
+	}
+	$(this).reset();
 
 	});
 }
