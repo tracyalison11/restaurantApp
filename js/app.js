@@ -70,9 +70,33 @@ function submitToLocalStorage(){
 		}
 		var customerName = $('.customerName').val();
 		var orderTotal = $(this).parent().parent().parent().find('.orderTotal').html();
-		var newDate = new Date;
+		
+		//Formatting DATE and TIME
+		var newDate = new Date();
+		var am_pm = " ";
+		var currDate = newDate.getDate();
+		var currMonth = newDate.getMonth();
+		var currYear = newDate.getFullYear();
 		orders.unshift(customerName, newDate, orderTotal);
 		console.log(orders);
+
+		var currHour = newDate.getHours();
+		if (currHour < 12) {
+			am_pm = "AM";
+		}
+		else {
+			am_pm = "PM";
+		}
+		if (currHour == 0) {
+			currHour = currHour - 12;
+		}
+
+		var currMin = getDate().getMinutes();
+		currMin = currMin + " ";
+
+		if (currMin.length == 1) {
+			currMin = "0" + currMin;
+		}
 	  	// HTML5 localStorage Support
 		try{
 			localStorage.setItem('order', orders);
